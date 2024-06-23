@@ -11,9 +11,7 @@
    git pull
    ```
 
-1. Connect once with SSH to the target Ubuntu device setup in [Install Ubuntu on
-   device][install-os]. Both the control node and the Ubuntu device must be
-   on the same network. This may ask if you are sure to continue connecting. If
+1. Connect once with SSH to the target Ubuntu device setup. This may ask if you are sure to continue connecting. If
    asked, type `yes`. This connection is done to save the Ubuntu device
    fingerprint into the control node's `known_hosts` file. This is required
    for the next step that uses Ansible calls inside a script.
@@ -29,8 +27,8 @@
    ```
 
 1. Edit the configuration file `configuration.yml` using a text editor. This
-   file contains all the settings and options that can be customize in the
-   Machine Metrics Monitoring stack. Uncomment any settings and change their
+   file contains all the settings and options that can be customized in the
+   logging stack. Uncomment any settings and change their
    values. The next command will open `configuration.yml` in GNU nano, a well
    known text editor on Linux based systems. Once the changes applied, use
    `Ctrl-S` to save the changes and then `Ctrl-X` to close GNU nano. See the
@@ -41,12 +39,12 @@
    nano configuration.yml
    ```
 
-1. Install the Logging stack with the next command. 
+1. Install the Logging stack with the next command.
 
    ```bash
    bash install.sh --host <HOST> --user <REMOTE_USER>
    ```
 
+   When requested enter the password for the remote user and the sudo user.
+
 1. Repeat steps 2 to 5 for additional Ubuntu devices.
-
-
