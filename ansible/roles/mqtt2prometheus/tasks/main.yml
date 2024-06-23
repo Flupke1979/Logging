@@ -1,0 +1,23 @@
+---
+# This creates directories and deploys mqtt2prometheus container files.
+
+- name: Create mqtt2prometheus directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/mqtt2prometheus"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/mqtt2prometheus"
+    mode: 0664
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/mqtt2prometheus/config"
+    state: directory
+    mode: 0775
+- name: Deploy configuration file
+  ansible.builtin.template:
+    src: config.yml
+    dest: "{{ containers_path }}/mqtt2prometheus/config"
+    mode: 0664

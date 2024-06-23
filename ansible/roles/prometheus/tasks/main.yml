@@ -1,0 +1,33 @@
+---
+# This creates directories and deploys Prometheus container files.
+
+- name: Create prometheus directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/prometheus"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/prometheus"
+    mode: 0664
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/prometheus/config"
+    state: directory
+    mode: 0775
+- name: Deploy configuration file
+  ansible.builtin.copy:
+    src: prometheus.yml
+    dest: "{{ containers_path }}/prometheus/config"
+    mode: 0664
+- name: Deploy external scrape configs file
+  ansible.builtin.template:
+    src: external-scrape-configs.yml
+    dest: "{{ containers_path }}/prometheus/config"
+    mode: 0664
+- name: Create data directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/prometheus/data"
+    state: directory
+    mode: 0775

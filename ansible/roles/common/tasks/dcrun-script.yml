@@ -1,0 +1,18 @@
+---
+# This deploy the dcrun.sh script and ensure its dependencies are installed.
+
+- name: Ensure dcrun script dependencies are installed
+  ansible.builtin.apt:
+    name:
+      # cspell:ignore findutils
+      - findutils
+      - grep
+      - sed
+    state: present
+    update_cache: true
+  become: true
+- name: Deploy dcrun script
+  ansible.builtin.template:
+    src: dcrun.sh
+    dest: "{{ install_path }}/dcrun.sh"
+    mode: 0744

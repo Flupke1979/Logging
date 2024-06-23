@@ -1,0 +1,26 @@
+---
+# Rabbitmq broker
+
+# version: "3.9"
+
+services:
+  rabbit:
+    build: ./containers/rabbitmq/config/env/rabbit
+    container_name: "rabbit-mqtt"
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: 3dmax
+      RABBITMQ_DEFAULT_PASS: 2YxRzDk0
+      RABBITMQ_PORT: 5672
+      RABBITMQ_API_PORT: 15672
+      RABBITMQ_MQTT_PORT: 1883
+    ports:
+      - $RABBITMQ_SERVER_PORT:5672/tcp
+      - $RABBITMQ_API_PORT:15672/tcp
+      - $RABBITMQ_MQTT_PORT:1883/tcp
+      - $RABBITMQ_METRICS_PORT:15692/tcp
+    networks:
+      monitoring: ~
+    volumes:
+      - ./containers/rabbitmq/config:/rabbitmq/config:ro
+      - ./containers/rabbitmq/data:/rabbitmq/data

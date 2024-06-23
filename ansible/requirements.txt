@@ -1,0 +1,6 @@
+# Python requirements file doc:
+# - https://git-scm.com/docs/gitignore
+
+# This file is used to force using tested versions dependent packages.
+
+ansible==9.0.1

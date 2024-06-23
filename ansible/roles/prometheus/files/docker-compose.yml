@@ -1,0 +1,21 @@
+---
+# Prometheus is a systems and service monitoring system.
+
+# version: "3.9"
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.48.0
+    user: $PUID:$PGID
+    volumes:
+      # yamllint disable-line rule:line-length
+      - ./containers/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      # yamllint disable-line rule:line-length
+      - ./containers/prometheus/config/external-scrape-configs.yml:/etc/prometheus/external-scrape-configs.yml:ro
+      - ./containers/prometheus/data:/prometheus
+    networks:
+      monitoring: ~
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

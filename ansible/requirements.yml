@@ -1,0 +1,9 @@
+---
+# Ansible dependencies requirements file used to force using tested versions of
+# external collections.
+
+collections:
+  - name: community.general
+    version: 8.0.2
+  - name: community.docker
+    version: 3.4.11

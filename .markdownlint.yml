@@ -1,0 +1,27 @@
+---
+# Linter rules doc:
+# - https://github.com/DavidAnson/markdownlint
+
+# yamllint disable-line rule:line-length
+# yaml-language-server: $schema=https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json
+
+# Set style of unordered lists.
+MD004:
+  style: dash
+
+# Exclude tables from the 80 columns rule.
+MD013:
+  tables: false
+  headings: false
+
+# Allow heading duplication is allowed for non-sibling headings.
+MD024:
+  siblings_only: true
+
+# Set style of ordered lists.
+MD029:
+  style: one
+
+# Set emphasis style
+MD049:
+  style: asterisk

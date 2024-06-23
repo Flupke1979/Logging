@@ -1,0 +1,8 @@
+---
+# This file contains user defined additional scrape configs for Prometheus.
+
+# {%- if prometheus_scrape_configs is defined +%}
+scrape_configs:
+# Final indent of the list is wrong but Prometheus does not complain.
+{{ prometheus_scrape_configs | to_nice_yaml(indent=2) }}
+# {%- endif %}

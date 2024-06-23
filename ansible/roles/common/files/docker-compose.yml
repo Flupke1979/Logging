@@ -1,0 +1,13 @@
+---
+# Top level docker-compose files defining common elements. Here, only internal
+# networks.
+
+# version: "3.9"
+
+# All internal network are listed and named to easily call then by name
+# elsewhere.
+networks:
+  monitoring:
+    name: monitoring
+  socket_proxy:
+    name: socket_proxy

@@ -1,0 +1,38 @@
+---
+# This creates directories and deploys Grafana container files.
+
+- name: Create grafana directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/grafana"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/grafana"
+    mode: 0664
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/grafana/config"
+    state: directory
+    mode: 0775
+- name: Deploy data sources file
+  ansible.builtin.copy:
+    src: data-sources.yml
+    dest: "{{ containers_path }}/grafana/config"
+    mode: 0664
+- name: Create data directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/grafana/data"
+    state: directory
+    # Grafana is running as root.
+    mode: 0777
+- name: Allow HTTP port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "{{ grafana.http_port }}"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload

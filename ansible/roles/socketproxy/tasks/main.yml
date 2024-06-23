@@ -1,0 +1,13 @@
+---
+# This creates directories and deploys docker-socket-proxy container files.
+
+- name: Create socketproxy directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/socketproxy"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/socketproxy"
+    mode: 0664

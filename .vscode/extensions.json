@@ -1,0 +1,21 @@
+// Lists the recommended extensions for this workspace.
+// Extension identifier format: ${publisher}.${name} Example: vscode.csharp
+// Doc:
+// https://go.microsoft.com/fwlink/?LinkId=827846
+
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "foxundermoon.shell-format",
+    "mhutchie.git-graph",
+    "mrmlnc.vscode-json5",
+    "ms-cst-e.vscode-devskim",
+    "ms-python.python",
+    "redhat.vscode-yaml",
+    "stkb.rewrap",
+    "streetsidesoftware.code-spell-checker",
+    "tamasfe.even-better-toml",
+    "timonwong.shellcheck"
+  ]
+}

@@ -1,0 +1,13 @@
+---
+# Linter rules doc:
+# - https://ansible-lint.readthedocs.io/configuring
+
+# yamllint disable-line rule:line-length
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json
+
+# Add here used modules that are not part of the built-in Ansible modules.
+mock_modules:
+  - community.docker.docker_prune
+  - community.docker.docker_container
+  - community.general.timezone
+  - community.general.ufw

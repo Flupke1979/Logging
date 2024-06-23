@@ -1,0 +1,20 @@
+---
+# mqtt2prometheus configuration file doc:
+# - https://github.com/hikhvar/mqtt2prometheus
+
+mqtt:
+  server: "{{ mqtt_server }}"
+  topic_path: "{{ mqtt2prometheus_topic_path }}"
+  device_id_regex: "{{ mqtt2prometheus_device_id_regex }}"
+  qos: 0
+
+cache:
+  timeout: 24h
+
+# Invalid YAML because of Jinja template usage.
+# This file is also ignored by Prettier and yamllint.
+# {%- if mqtt2prometheus_metrics is defined +%}
+metrics:
+# Final indent of the list is wrong but mqtt2prometheus does not complain.
+{{ mqtt2prometheus_metrics | to_nice_yaml(indent=2) }}
+# {%- endif %}

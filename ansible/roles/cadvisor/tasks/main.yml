@@ -1,0 +1,13 @@
+---
+# This creates directories and deploys cAdvisor container files.
+
+- name: Create cadvisor directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/cadvisor"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/cadvisor"
+    mode: 0664

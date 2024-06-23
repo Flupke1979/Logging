@@ -1,0 +1,15 @@
+---
+# Simple sudo apt update && sudo apt upgrade and reboot if required
+
+- name: Apply updates
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: "yes"
+  become: true
+- name: Check if reboot required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: common_reboot_required_file
+  changed_when: common_reboot_required_file.stat.exists
+  notify:
+    - Reboot

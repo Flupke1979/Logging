@@ -1,0 +1,13 @@
+---
+# This creates directories and deploys nodeexporter container files.
+
+- name: Create nodeexporter directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/nodeexporter"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/nodeexporter"
+    mode: 0664

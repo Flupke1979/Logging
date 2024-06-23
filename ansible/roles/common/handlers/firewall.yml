@@ -1,0 +1,8 @@
+---
+# Firewall related handlers.
+
+# Trigger when firewall settings are changed
+- name: Firewall reload
+  community.general.ufw:
+    state: reloaded
+  become: true

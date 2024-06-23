@@ -1,0 +1,35 @@
+---
+# Prometheus configuration doc
+# - https://prometheus.io/docs/prometheus/latest/configuration/configuration
+
+global:
+  scrape_interval: 15s
+
+scrape_config_files:
+  - external-scrape-configs.yml
+
+scrape_configs:
+  # Prometheus metrics (itself)
+  - job_name: prometheus
+    static_configs:
+      - targets:
+          - localhost:9090
+
+  # Local Docker metrics
+  - job_name: docker
+    static_configs:
+      - targets:
+          - cadvisor:8080
+
+  # Host OS metrics
+  - job_name: host
+    static_configs:
+      - targets:
+          - nodeexporter:9100
+
+  # Incoming mqtt metrics
+  - job_name: mqtt
+    scrape_interval: 1s
+    static_configs:
+      - targets:
+          - mqtt2prometheus:9641

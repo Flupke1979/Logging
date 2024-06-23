@@ -1,0 +1,23 @@
+---
+# This deploy a .env file, allowing to use its variables to be use throughout
+# the docker compose files.
+
+- name: Register PUID
+  ansible.builtin.command:
+    cmd: id -u
+  register: common_user_id
+  changed_when: false
+- name: Register PGID
+  ansible.builtin.command:
+    cmd: id -g
+  register: common_group_id
+  changed_when: false
+- name: Set PUID & PGID variables
+  ansible.builtin.set_fact:
+    common_puid: "{{ common_user_id.stdout_lines[0] }}"
+    common_pgid: "{{ common_group_id.stdout_lines[0] }}"
+- name: Deploy environment file
+  ansible.builtin.template:
+    src: .env
+    dest: "{{ install_path }}/.env"
+    mode: 0664

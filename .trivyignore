@@ -1,0 +1,10 @@
+# Trivy Documentation:
+# - https://aquasecurity.github.io/trivy
+
+# These are closed (so now false positive) by
+# https://github.com/ansible-collections/community.aws/pull/237
+CVE-2020-25636
+CVE-2020-25635
+
+# Accept the risk.
+CVE-2021-3532

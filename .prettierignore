@@ -1,0 +1,6 @@
+# Prettier ignore file doc:
+# - https://prettier.io/docs/en/ignore.html
+
+# Invalid YAML because of Jinja template usage.
+ansible/roles/mqtt2prometheus/templates/config.yml
+ansible/roles/prometheus/templates/external-scrape-configs.yml

@@ -1,0 +1,58 @@
+---
+# Common setup tasks
+
+- name: Apply OS Updates
+  ansible.builtin.include_tasks:
+    file: apt.yml
+
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ time_zone }}"
+  become: true
+  notify:
+    - Restart cron
+
+- name: Install ntpdate
+  ansible.builtin.apt:
+    name: ntpdate
+    state: present
+  become: true
+
+- name: Synchronize time with ntp server
+  ansible.builtin.command:
+    cmd: ntpdate {{ ntp_server }}
+  become: true
+
+- name: Setup firewall settings
+  ansible.builtin.include_tasks:
+    file: firewall.yml
+
+- name: Install Docker
+  ansible.builtin.include_tasks:
+    file: docker.yml
+
+- name: Create install directory
+  ansible.builtin.file:
+    path: "{{ install_path }}"
+    state: directory
+    mode: 0775
+
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ install_path }}"
+    mode: 0664
+
+- name: Deploy environment variables
+  ansible.builtin.include_tasks:
+    file: environment-variables.yml
+
+- name: Deploy compose script
+  ansible.builtin.include_tasks:
+    file: dcrun-script.yml
+
+- name: Create secrets directory
+  ansible.builtin.file:
+    path: "{{ install_path }}/secrets"
+    state: directory
+    mode: 0775

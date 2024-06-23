@@ -1,0 +1,28 @@
+---
+# This exporter translates from MQTT topics to Prometheus metrics.
+
+# version: "3.9"
+
+services:
+  mqtt2prometheus:
+    container_name: mqtt2prometheus
+    # cspell:ignore hikhvar
+    image: ghcr.io/hikhvar/mqtt2prometheus:v0.1.7
+    entrypoint:
+      - /mqtt2prometheus
+      # - -treat-mqtt-password-as-file-name=true
+    user: $PUID:$PGID
+    environment:
+      - MQTT2PROM_MQTT_USER=$MQTT_USERNAME
+      - MQTT2PROM_MQTT_PASSWORD=$MQTT_PSW
+    volumes:
+      - ./containers/mqtt2prometheus/config/config.yml:/config.yaml:ro
+    networks:
+      monitoring: ~
+    # secrets:
+    # - mqtt-password
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - rabbit
+    restart: unless-stopped

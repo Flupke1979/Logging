@@ -1,0 +1,17 @@
+---
+# Main handlers and includes.
+
+- name: Firewall handler tasks
+  ansible.builtin.import_tasks:
+    file: firewall.yml
+
+- name: Restart cron
+  ansible.builtin.systemd:
+    state: restarted
+    name: cron
+  become: true
+
+- name: Reboot
+  ansible.builtin.reboot:
+  when: common_reboot_required_file.stat.exists
+  become: true

@@ -1,0 +1,45 @@
+---
+# This is the top level playbook that contains the full deployment.
+
+# yamllint disable-line rule:line-length
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook
+
+- name: Device setup
+  hosts: all
+  roles:
+    - role: common
+    - role: cadvisor
+    - role: grafana
+    - role: mqtt2prometheus
+    - role: nodeexporter
+    - role: prometheus
+    - role: socketproxy
+    - role: rabbitmq
+
+# Start containers. Pull -> Down -> Up. This reduce downtime on upgrades.
+- name: Start containers
+  hosts: all
+  tasks:
+    - name: Docker compose pull
+      ansible.builtin.command:
+        cmd: "{{ install_path }}/dcrun.sh pull"
+      become: true
+      changed_when: true
+    - name: Docker compose down
+      ansible.builtin.command:
+        cmd: "{{ install_path }}/dcrun.sh down"
+      become: true
+      changed_when: true
+    - name: Docker compose up
+      ansible.builtin.command:
+        cmd: "{{ install_path }}/dcrun.sh up"
+      become: true
+      changed_when: true
+    - name: Prune Docker
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        networks: true
+        volumes: true
+        builder_cache: true
+      become: true

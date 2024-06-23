@@ -1,0 +1,14 @@
+---
+# Grafana provisioning Grafana doc
+# - https://grafana.com/docs/grafana/latest/administration/provisioning
+
+# cSpell:enableCompoundWords
+
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090 # DevSkim: ignore DS137138
+    isDefault: true
+

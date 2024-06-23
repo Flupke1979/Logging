@@ -1,0 +1,96 @@
+---
+################################################################################
+# System settings
+#
+# This section contains system settings.
+#
+# time_zone
+#   Sets the system time zone. Must be set to one of the time zone names from
+#   the IANA time zone database.
+#   Default: Etc/UTC
+################################################################################
+
+time_zone: CET # Belgium timezone
+ntp_server: time.windows.com
+
+################################################################################
+# Prometheus scrape_configs
+#
+# The next setting will be passed to Prometheus as additional elements in the
+# list of its <scrape_configs> configuration section.
+# See https://prometheus.io/docs/prometheus/latest/configuration/configuration
+# for help on required YAML structure and parameters.
+#
+# prometheus_scrape_configs
+#   Specifies a set of targets and parameters describing how to scrape them. In
+#   the general case, one scrape configuration specifies a single job. In
+#   advanced configurations, this may change.
+################################################################################
+
+prometheus_scrape_configs:
+  # - job_name: demo
+  #   static_configs:
+  #     - targets:
+  #         - 192.168.30.115:9182
+  - job_name: "rabbitmq_3dmax"
+    static_configs:
+      - targets: ["85.215.136.225:15692"]
+    metrics_path: "/metrics" # Endpoint exposed by RabbitMQ Prometheus plugin
+    scheme: http
+    basic_auth:
+      username: 3dmax
+      password: 2YxRzDk0
+
+################################################################################
+# MQTT settings
+#
+# This section contains settings related to the embedded MQTT broker used to
+# receive incoming MQTT messages for metrics aggregation.
+#
+# mqtt_username
+#   Sets the username of the incoming connections to the embedded MQTT broker.
+#   Default: monitoring
+#
+# mqtt_password
+#   Sets the password of the incoming connections to the embedded MQTT broker.
+#   Note: It is highly recommended to customize this password with an instance
+#   specific string password.
+#   Default: MyMQTTPass0!
+################################################################################
+
+mqtt_username: 3dmax
+mqtt_password: 2YxRzDk0
+mqtt_server: 85.215.136.225:1883
+
+################################################################################
+# mqtt2prometheus
+#
+# The next setting will be passed to mqtt2prometheus exporter for Prometheus.
+# mqtt2prometheus translates MQTT topics to Prometheus metrics. See its full
+# documentation here: https://github.com/hikhvar/mqtt2prometheus
+#
+# mqtt2prometheus_topic_path
+#   Sets the topic path to subscribe to. Be aware that you have to specify the
+#   wildcard, if you want to follow topics for multiple sensors.
+#   Default: tele/+/STATE
+#
+# mqtt2prometheus_device_id_regex
+#   Regular expression to extract the device ID from the topic path. The regular
+#   expression must contain a named capture group with the name deviceid. For
+#   example the expression for Tasmota based sensors is
+#   "tele/(?P<deviceid>.*)/.*".
+#   Default: tele/(?P<deviceid>.*)/STATE
+#
+# mqtt2prometheus_metrics
+#   List of metrics to export. Only metrics listed here will be exported. See
+#   https://github.com/hikhvar/mqtt2prometheus#config-file for the full
+#   documentation the contained list items and values.
+################################################################################
+
+mqtt2prometheus_topic_path: Data
+# mqtt2prometheus_device_id_regex: Engines
+mqtt2prometheus_metrics:
+  - prom_name: Value_1
+    mqtt_name: Value_1
+    help: Description
+    type: gauge

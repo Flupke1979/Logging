@@ -1,0 +1,40 @@
+---
+# MegaLinter configuration doc:
+# - https://oxsecurity.github.io/megalinter/latest/configuration
+
+DISABLE_LINTERS:
+  # Don't need to if shell files are executable.
+  - BASH_EXEC
+  # Temporary disable of DevSkim until this Github issue is not solved.
+  # https://github.com/oxsecurity/megalinter/issues/2849
+  # cSpell:ignore DEVSKIM
+  - REPOSITORY_DEVSKIM
+  # cSpell:ignore KICS
+  # Disable KICS for now, lets address these issues later.
+  - REPOSITORY_KICS
+  # We allow tables to have more than 80 columns, so disabling
+  # MARKDOWN_MARKDOWN_TABLE_FORMATTER
+  - MARKDOWN_MARKDOWN_TABLE_FORMATTER
+  # Disabling Lychee. We were unable to make it skip the internal containers
+  # URLs.
+  - SPELL_LYCHEE
+  # Seems to not be update anymore amd not easy to ignore words, so disabling.
+  - SPELL_MISSPELL
+# Disable MegaLinter flavors suggestions.
+FLAVOR_SUGGESTIONS: false
+# Force warnings into errors
+FORMATTERS_DISABLE_ERRORS: false
+LINTER_RULES_PATH: /
+# shfmt arguments. Set indent to 4 as what we set in VSCode settings.
+# cSpell:ignore SHFMT
+BASH_SHFMT_ARGUMENTS: --indent 4
+# jsonlint arguments. Allow comments
+# cSpell:ignore JSONLINT
+JSON_JSONLINT_ARGUMENTS: --comments
+# markdownlint configuration file (To match the VSCode extension)
+MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.yml
+# yamllint configuration file (To match yamllint name format)
+YAML_YAMLLINT_CONFIG_FILE: .yamllint.yml
+# Excluding files from yamllint. Does not seems to work in .yamllint.yml
+YAML_YAMLLINT_FILTER_REGEX_EXCLUDE: >-
+  (templates/config.yml|external-scrape-configs.yml)

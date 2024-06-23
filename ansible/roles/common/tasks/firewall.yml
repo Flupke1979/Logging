@@ -1,0 +1,39 @@
+---
+# This contains the Uncomplicated Firewall included in Ubuntu setup.
+
+- name: Ensure ufw is installed
+  ansible.builtin.apt:
+    name:
+      - ufw
+    state: present
+    update_cache: true
+  become: true
+- name: Deny incoming traffic
+  community.general.ufw:
+    direction: incoming
+    proto: any
+    policy: deny
+  become: true
+  notify:
+    - Firewall reload
+- name: Allow outgoing traffic
+  community.general.ufw:
+    direction: outgoing
+    proto: any
+    policy: allow
+  become: true
+  notify:
+    - Firewall reload
+- name: Allow SSH port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "22"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload
+- name: Enable ufw service
+  community.general.ufw:
+    state: enabled
+  become: true

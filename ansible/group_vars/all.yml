@@ -1,0 +1,21 @@
+---
+# This file holds the global variables for Ansible.
+
+# System settings
+install_path: /home/{{ ansible_user }}/monitoring
+containers_path: "{{ install_path }}/containers"
+secrets_path: "{{ install_path }}/secrets"
+time_zone: Etc/UTC
+
+# mqtt2prometheus settings
+mqtt2prometheus_topic_path: tele/+/STATE
+mqtt2prometheus_device_id_regex: tele/(?P<deviceid>.*)/STATE
+
+# Containers options
+grafana:
+  http_port: 80
+rabbitmq:
+  mqtt_port: 1883
+  server_port: 5672
+  api_port: 15672
+  metrics_port: 15692

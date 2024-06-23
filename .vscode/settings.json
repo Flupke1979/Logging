@@ -1,0 +1,42 @@
+// VS Code settings file doc:
+// https://go.microsoft.com/fwlink/?LinkId=827846
+
+{
+  // Set default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Disable auto detect indentation to use the define value.
+  "editor.detectIndentation": false,
+  // Format on save
+  "editor.formatOnSave": true,
+  // Set ruler at 80 for readability
+  "editor.rulers": [80],
+  // Set tab size per file types
+  "editor.tabSize": 2,
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.tabSize": 4
+  },
+  // Force languages to not recognized files.
+  "files.associations": {
+    ".ansible-lint": "yaml",
+    ".cspell.json": "jsonc",
+    ".env": "properties",
+    ".trivyignore": "ignore"
+  },
+  // Force final new line as required by some files and linters.
+  "files.insertFinalNewline": true,
+  // Force end of line
+  "files.eol": "\n",
+  // Trim trailing whitespace to be compatible with linters
+  "files.trimTrailingWhitespace": true,
+  // Validate links in Markdown
+  "markdown.validate.enabled": true,
+  // Disable Red Hat extensions telemetry
+  "redhat.telemetry.enabled": false
+}

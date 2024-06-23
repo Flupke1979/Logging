@@ -1,0 +1,79 @@
+---
+# This creates directories and deploys rabbitmq container files.
+
+- name: Create rabbitmq directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/rabbitmq"
+    state: directory
+    mode: 0775
+- name: Deploy compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ containers_path }}/rabbitmq"
+    mode: 0664
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/rabbitmq/config"
+    state: directory
+    mode: 0775
+- name: Deploy configuration file
+  ansible.builtin.copy:
+    src: rabbitmq.conf
+    dest: "{{ containers_path }}/rabbitmq/config"
+    mode: 0664
+- name: Deploy advanced configuration file
+  ansible.builtin.copy:
+    src: advanced.config
+    dest: "{{ containers_path }}/rabbitmq/config"
+    mode: 0664
+- name: Create environment directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/rabbitmq/config/env/rabbit"
+    state: directory
+    mode: 0775
+- name: Deploy Dockerfile
+  ansible.builtin.copy:
+    src: Dockerfile
+    dest: "{{ containers_path }}/rabbitmq/config/env/rabbit"
+    mode: 0664
+- name: Create data directory
+  ansible.builtin.file:
+    path: "{{ containers_path }}/rabbitmq/data"
+    state: directory
+    mode: 0775
+- name: Allow rabbitmq server port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "{{ rabbitmq.server_port }}"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload
+- name: Allow rabbitmq metrics port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "{{ rabbitmq.metrics_port }}"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload
+- name: Allow rabbitmq api port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "{{ rabbitmq.api_port }}"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload
+- name: Allow rabbitmq mqtt port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    port: "{{ rabbitmq.mqtt_port }}"
+    proto: tcp
+  become: true
+  notify:
+    - Firewall reload
